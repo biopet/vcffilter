@@ -1,27 +1,22 @@
-#  BIOPET tool suite
+#  VcfFilter
 This tool is part of BIOPET tool suite that is developed at LUMC by [the SASC team](http://sasc.lumc.nl/). 
 Each tool in the BIOPET tool suite is meant to offer a standalone function that can be used to perform a
 dedicate data analysis task or added as part of [BIOPET pipelines](http://biopet-docs.readthedocs.io/en/latest/).
 
 #  About this tool
-<Description of a tool>
+This tool filters VCF files on a number of values. For example, it can filter on sample depth and/or total depth. It
+can also filter out the reference calls and/or minimum number of sample passes. For more on filtering options and how
+to set them, please refer to the help menu.
 
-#  Installation
-This tool requires Java 8 to be installed on your device. Download Java 8 
-[here](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) 
-or install via your distribution's package manager.
+This tool enables a user to filter VCF files. For example on sample depth and/or total depth. It can also be used to
+filter out the reference calls and/or minimum number of sample passes. There is a wide set of options which one can
+use to change the filter settings.
 
-Download the latest version of <tool> [here](https://github.com/biopet/<tool>/releases). 
-To generate the usage run:
-```bash
-java -jar <tool>-version.jar --help
-```
+#  Documentation
+For documentation and manuals visit the [readthedocs page](http://biopet-VcfFilter.readthedocs.io/en/latest/).
 
-#  Manual
-<Help doc of a tool>
 
 #  Contact
-
 
 <p>
   <!-- Obscure e-mail address for spammers -->
