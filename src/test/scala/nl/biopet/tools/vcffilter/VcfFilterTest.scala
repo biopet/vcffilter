@@ -4,14 +4,14 @@ import java.io.File
 
 import htsjdk.variant.variantcontext.GenotypeType
 import htsjdk.variant.vcf.VCFFileReader
-import nl.biopet.test.BiopetTest
+import nl.biopet.utils.test.tools.ToolTest
 import nl.biopet.tools.vcffilter.Args.Trio
 import org.testng.annotations.Test
 
 import scala.collection.JavaConversions._
 import scala.util.Random
 
-class VcfFilterTest extends BiopetTest {
+class VcfFilterTest extends ToolTest[Args] {
   import VcfFilter._
 
   @Test

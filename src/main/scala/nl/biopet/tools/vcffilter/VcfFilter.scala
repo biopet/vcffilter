@@ -9,7 +9,7 @@ import nl.biopet.utils.tool.ToolCommand
 
 import scala.collection.JavaConversions._
 
-object VcfFilter extends ToolCommand {
+object VcfFilter extends ToolCommand[Args] {
   def main(args: Array[String]): Unit = {
     val parser = new ArgsParser(toolName)
     val cmdArgs =
