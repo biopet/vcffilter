@@ -12,6 +12,7 @@ import scala.collection.JavaConversions._
 import scala.util.Random
 
 class VcfFilterTest extends ToolTest[Args] {
+  def toolCommand: VcfFilter.type = VcfFilter
   import VcfFilter._
 
   @Test
