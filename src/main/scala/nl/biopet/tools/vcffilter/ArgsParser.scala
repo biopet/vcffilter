@@ -100,7 +100,7 @@ class ArgsParser(cmdName: String) extends AbstractOptParser[Args](cmdName) {
   } text "File that contain list of IDs to get from vcf file"
   opt[Int]("minGenomeQuality") unbounded () action { (x, c) =>
     c.copy(minGenomeQuality = x)
-  }
+  } text "The minimum value in the Genome Quality field."
   opt[String]("advancedGroups") unbounded () action { (x, c) =>
     c.copy(advancedGroups = x.split(",").toList :: c.advancedGroups)
   } text "All members of groups sprated with a ','"
