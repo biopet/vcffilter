@@ -1,6 +1,9 @@
 package nl.biopet.tools.vcffilter
 
-import htsjdk.variant.variantcontext.writer.{AsyncVariantContextWriter, VariantContextWriterBuilder}
+import htsjdk.variant.variantcontext.writer.{
+  AsyncVariantContextWriter,
+  VariantContextWriterBuilder
+}
 import htsjdk.variant.variantcontext.{GenotypeType, VariantContext}
 import htsjdk.variant.vcf.VCFFileReader
 import nl.biopet.tools.vcffilter.Args.Trio
@@ -39,41 +42,53 @@ object VcfFilter extends ToolCommand[Args] {
     var counterLeft = 0
     for (record <- reader) {
       if (cmdArgs.minQualScore.forall(minQualscore(record, _)) &&
-        (!cmdArgs.booleanArgs.filterRefCalls || hasNonRefCalls(record)) &&
-        (!cmdArgs.booleanArgs.filterNoCalls || hasCalls(record)) &&
-        (!cmdArgs.booleanArgs.uniqueOnly || hasUniqeSample(record)) &&
-        (!cmdArgs.booleanArgs.sharedOnly || allSamplesVariant(record)) &&
-        hasMinTotalDepth(record, cmdArgs.minTotalDepth) &&
-        hasMinSampleDepth(record, cmdArgs.minSampleDepth, cmdArgs.minSamplesPass) &&
-        minAlternateDepth(record, cmdArgs.minAlternateDepth, cmdArgs.minSamplesPass) &&
-        minGenomeQuality(record, cmdArgs.minGenomeQuality, cmdArgs.minSamplesPass) &&
-        (cmdArgs.mustHaveVariant.isEmpty || mustHaveVariant(record, cmdArgs.mustHaveVariant)) &&
-        (cmdArgs.mustNotHaveVariant.isEmpty || mustNotHaveVariant(record,
-          cmdArgs.mustNotHaveVariant)) &&
-        calledIn(record, cmdArgs.calledIn) &&
-        hasGenotype(record, cmdArgs.mustHaveGenotype) &&
-        (cmdArgs.diffGenotype.isEmpty || cmdArgs.diffGenotype.forall(x =>
-          notSameGenotype(record, x._1, x._2))) &&
-        (
-          cmdArgs.filterHetVarToHomVar.isEmpty ||
-            cmdArgs.filterHetVarToHomVar.forall(x => filterHetVarToHomVar(record, x._1, x._2))
+          (!cmdArgs.booleanArgs.filterRefCalls || hasNonRefCalls(record)) &&
+          (!cmdArgs.booleanArgs.filterNoCalls || hasCalls(record)) &&
+          (!cmdArgs.booleanArgs.uniqueOnly || hasUniqeSample(record)) &&
+          (!cmdArgs.booleanArgs.sharedOnly || allSamplesVariant(record)) &&
+          hasMinTotalDepth(record, cmdArgs.minTotalDepth) &&
+          hasMinSampleDepth(record,
+                            cmdArgs.minSampleDepth,
+                            cmdArgs.minSamplesPass) &&
+          minAlternateDepth(record,
+                            cmdArgs.minAlternateDepth,
+                            cmdArgs.minSamplesPass) &&
+          minGenomeQuality(record,
+                           cmdArgs.minGenomeQuality,
+                           cmdArgs.minSamplesPass) &&
+          (cmdArgs.mustHaveVariant.isEmpty || mustHaveVariant(
+            record,
+            cmdArgs.mustHaveVariant)) &&
+          (cmdArgs.mustNotHaveVariant.isEmpty || mustNotHaveVariant(
+            record,
+            cmdArgs.mustNotHaveVariant)) &&
+          calledIn(record, cmdArgs.calledIn) &&
+          hasGenotype(record, cmdArgs.mustHaveGenotype) &&
+          (cmdArgs.diffGenotype.isEmpty || cmdArgs.diffGenotype.forall(x =>
+            notSameGenotype(record, x._1, x._2))) &&
+          (
+            cmdArgs.filterHetVarToHomVar.isEmpty ||
+            cmdArgs.filterHetVarToHomVar.forall(x =>
+              filterHetVarToHomVar(record, x._1, x._2))
           ) &&
-        uniqueVariantInSample(record, cmdArgs.uniqueVariantInSample) &&
-        denovoTrio(record, cmdArgs.deNovoTrio) &&
-        denovoTrio(record, cmdArgs.trioLossOfHet, onlyLossHet = true) &&
-        resToDom(record, cmdArgs.resToDom) &&
-        trioCompound(record, cmdArgs.trioCompound) &&
-        advancedGroupFilter(record, cmdArgs.advancedGroups) &&
-        (cmdArgs.iDset.isEmpty || inIdSet(record, cmdArgs.iDset))) {
+          uniqueVariantInSample(record, cmdArgs.uniqueVariantInSample) &&
+          denovoTrio(record, cmdArgs.deNovoTrio) &&
+          denovoTrio(record, cmdArgs.trioLossOfHet, onlyLossHet = true) &&
+          resToDom(record, cmdArgs.resToDom) &&
+          trioCompound(record, cmdArgs.trioCompound) &&
+          advancedGroupFilter(record, cmdArgs.advancedGroups) &&
+          (cmdArgs.iDset.isEmpty || inIdSet(record, cmdArgs.iDset))) {
         writer.add(record)
         counterLeft += 1
       } else
         invertedWriter.foreach(_.add(record))
       counterTotal += 1
       if (counterTotal % 100000 == 0)
-        logger.info(s"$counterTotal variants processed, $counterLeft passed filter")
+        logger.info(
+          s"$counterTotal variants processed, $counterLeft passed filter")
     }
-    logger.info(s"$counterTotal variants processed, $counterLeft passed filter")
+    logger.info(
+      s"$counterTotal variants processed, $counterLeft passed filter")
     reader.close()
     writer.close()
     invertedWriter.foreach(_.close())
@@ -135,7 +150,8 @@ object VcfFilter extends ToolCommand[Args] {
   /** Checks if all samples are a variant */
   def allSamplesVariant(record: VariantContext): Boolean = {
     record.getGenotypes.forall(g =>
-      !g.isNonInformative && g.getAlleles.exists(a => a.isNonReference && !a.isNoCall))
+      !g.isNonInformative && g.getAlleles.exists(a =>
+        a.isNonReference && !a.isNoCall))
   }
 
   /** returns true when DP INFO field is atleast the given value */
@@ -173,7 +189,8 @@ object VcfFilter extends ToolCommand[Args] {
                         minSamplesPass: Int = 1): Boolean = {
     record.getGenotypes.count(genotype => {
       val AD = if (genotype.hasAD) List(genotype.getAD: _*) else Nil
-      if (AD.nonEmpty && minAlternateDepth >= 0) AD.tail.count(_ >= minAlternateDepth) > 0
+      if (AD.nonEmpty && minAlternateDepth >= 0)
+        AD.tail.count(_ >= minAlternateDepth) > 0
       else true
     }) >= minSamplesPass
   }
@@ -186,7 +203,9 @@ object VcfFilter extends ToolCommand[Args] {
     * @param minSamplesPass number of samples to consider
     * @return
     */
-  def minGenomeQuality(record: VariantContext, minGQ: Int, minSamplesPass: Int = 1): Boolean = {
+  def minGenomeQuality(record: VariantContext,
+                       minGQ: Int,
+                       minSamplesPass: Int = 1): Boolean = {
     record.getGenotypes.count(
       x =>
         if (minGQ == 0) true
@@ -205,7 +224,8 @@ object VcfFilter extends ToolCommand[Args] {
   def mustHaveVariant(record: VariantContext, samples: List[String]): Boolean = {
     samples.foreach { s =>
       if (!record.getSampleNames.toList.contains(s)) {
-        throw new IllegalArgumentException(s"Sample name $s does not exist in VCF file")
+        throw new IllegalArgumentException(
+          s"Sample name $s does not exist in VCF file")
       }
     }
     !samples
@@ -220,10 +240,12 @@ object VcfFilter extends ToolCommand[Args] {
     * @param samples List of samples that should have this variant
     * @return true if filter passed
     */
-  def mustNotHaveVariant(record: VariantContext, samples: List[String]): Boolean = {
+  def mustNotHaveVariant(record: VariantContext,
+                         samples: List[String]): Boolean = {
     samples.foreach { s =>
       if (!record.getSampleNames.toList.contains(s)) {
-        throw new IllegalArgumentException(s"Sample name $s does not exist in VCF file")
+        throw new IllegalArgumentException(
+          s"Sample name $s does not exist in VCF file")
       }
     }
     samples
@@ -232,7 +254,9 @@ object VcfFilter extends ToolCommand[Args] {
   }
 
   /** Checks if given samples have the same genotype */
-  def notSameGenotype(record: VariantContext, sample1: String, sample2: String): Boolean = {
+  def notSameGenotype(record: VariantContext,
+                      sample1: String,
+                      sample2: String): Boolean = {
     val genotype1 = record.getGenotype(sample1)
     val genotype2 = record.getGenotype(sample2)
     if (genotype1.sameGenotype(genotype2)) false
@@ -240,7 +264,9 @@ object VcfFilter extends ToolCommand[Args] {
   }
 
   /** Checks if sample1 is hetrozygous and if sample2 is homozygous for a alternative allele in sample1 */
-  def filterHetVarToHomVar(record: VariantContext, sample1: String, sample2: String): Boolean = {
+  def filterHetVarToHomVar(record: VariantContext,
+                           sample1: String,
+                           sample2: String): Boolean = {
     val genotype1 = record.getGenotype(sample1)
     val genotype2 = record.getGenotype(sample2)
     if (genotype1.isHet && !genotype1.getAlleles.forall(_.isNonReference)) {
@@ -271,9 +297,9 @@ object VcfFilter extends ToolCommand[Args] {
       val child = record.getGenotype(trio.child)
 
       if (child.isHomVar && child.getAlleles.forall(allele => {
-        record.getGenotype(trio.father).countAllele(allele) == 1 &&
-          record.getGenotype(trio.mother).countAllele(allele) == 1
-      })) return true
+            record.getGenotype(trio.father).countAllele(allele) == 1 &&
+            record.getGenotype(trio.mother).countAllele(allele) == 1
+          })) return true
     }
     trios.isEmpty
   }
@@ -284,9 +310,9 @@ object VcfFilter extends ToolCommand[Args] {
       val child = record.getGenotype(trio.child)
 
       if (child.isHetNonRef && child.getAlleles.forall(allele => {
-        record.getGenotype(trio.father).countAllele(allele) >= 1 &&
-          record.getGenotype(trio.mother).countAllele(allele) >= 1
-      })) return true
+            record.getGenotype(trio.father).countAllele(allele) >= 1 &&
+            record.getGenotype(trio.mother).countAllele(allele) >= 1
+          })) return true
     }
     trios.isEmpty
   }
@@ -307,10 +333,12 @@ object VcfFilter extends ToolCommand[Args] {
 
         if (onlyLossHet) {
           if (childCount == 2 && ((fatherCount == 2 && motherCount == 0) ||
-            (fatherCount == 0 && motherCount == 2))) return true
+              (fatherCount == 0 && motherCount == 2))) return true
         } else {
-          if (childCount == 1 && fatherCount == 0 && motherCount == 0) return true
-          else if (childCount == 2 && (fatherCount == 0 || motherCount == 0)) return true
+          if (childCount == 1 && fatherCount == 0 && motherCount == 0)
+            return true
+          else if (childCount == 2 && (fatherCount == 0 || motherCount == 0))
+            return true
         }
       }
     }
@@ -326,9 +354,13 @@ object VcfFilter extends ToolCommand[Args] {
     * returns true when for all groups all or none members have a variants,
     * records with partial groups are discarded
     */
-  def advancedGroupFilter(record: VariantContext, groups: List[List[String]]): Boolean = {
+  def advancedGroupFilter(record: VariantContext,
+                          groups: List[List[String]]): Boolean = {
     val samples = record.getGenotypes
-      .map(a => a.getSampleName -> (a.isHomRef || a.isNoCall || vcf.isCompoundNoCall(a)))
+      .map(
+        a =>
+          a.getSampleName -> (a.isHomRef || a.isNoCall || vcf.isCompoundNoCall(
+            a)))
       .toMap
 
     val g: List[Option[Boolean]] = groups.map { group =>
