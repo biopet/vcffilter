@@ -4,7 +4,7 @@ import java.io.File
 
 import htsjdk.variant.variantcontext.GenotypeType
 import nl.biopet.tools.vcffilter.Args.Trio
-import nl.biopet.utils.tool.AbstractOptParser
+import nl.biopet.utils.tool.{AbstractOptParser, ToolCommand}
 
 import scala.io.Source
 
