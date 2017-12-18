@@ -8,7 +8,8 @@ import nl.biopet.utils.tool.AbstractOptParser
 
 import scala.io.Source
 
-class ArgsParser(cmdName: String) extends AbstractOptParser[Args](cmdName) {
+class ArgsParser(toolCommand: ToolCommand[Args])
+    extends AbstractOptParser[Args](toolCommand) {
   opt[File]('I', "inputVcf") required () maxOccurs 1 valueName "<file>" action {
     (x, c) =>
       c.copy(inputVcf = x)
