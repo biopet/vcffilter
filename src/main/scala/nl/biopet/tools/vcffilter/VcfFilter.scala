@@ -373,4 +373,24 @@ object VcfFilter extends ToolCommand[Args] {
 
     !g.contains(None)
   }
+
+  def descriptionText: String =
+    """
+      |This tool enables a user to filter VCF files. For example on sample depth and/or total depth. It can also be used to
+      |filter out the reference calls and/or minimum number of sample passes. There is a wide set of options which one can
+      |use to change the filter settings.
+    """.stripMargin
+
+  def manualText: String =
+    """
+      |This tool filters VCF files on a number of values. For example, it can filter on sample depth and/or total depth. It
+      |can also filter out the reference calls and/or minimum number of sample passes. For more on filtering options and how
+      |to set them, please refer to the help usage.
+      """.stripMargin
+
+  def exampleText: String =
+    s"""
+       |To filter a VCF for variants with a minimum quality score of 50:
+       |${example("-I", "input.vcf", "-o", "output.vcf", "--minQualScore","50")}
+     """.stripMargin
 }
