@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2014 Sequencing Analysis Support Core - Leiden University Medical Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package nl.biopet.tools.vcffilter
 
 import htsjdk.variant.variantcontext.writer.{
@@ -14,7 +35,7 @@ import scala.collection.JavaConversions._
 
 object VcfFilter extends ToolCommand[Args] {
   def emptyArgs: Args = Args()
-  def argsParser = new ArgsParser(toolName)
+  def argsParser = new ArgsParser(this)
   def main(args: Array[String]): Unit = {
     val cmdArgs = cmdArrayToArgs(args)
 
@@ -373,4 +394,29 @@ object VcfFilter extends ToolCommand[Args] {
 
     !g.contains(None)
   }
+
+  def descriptionText: String =
+    """
+      |This tool enables a user to filter VCF files. For example on sample depth and/or total depth. It can also be used to
+      |filter out the reference calls and/or minimum number of sample passes. There is a wide set of options which one can
+      |use to change the filter settings.
+    """.stripMargin
+
+  def manualText: String =
+    """
+      |This tool filters VCF files on a number of values. For example, it can filter on sample depth and/or total depth. It
+      |can also filter out the reference calls and/or minimum number of sample passes. For more on filtering options and how
+      |to set them, please refer to the help usage.
+      """.stripMargin
+
+  def exampleText: String =
+    s"""
+       |To filter a VCF for variants with a minimum quality score of 50:
+       |${example("-I",
+                  "input.vcf",
+                  "-o",
+                  "output.vcf",
+                  "--minQualScore",
+                  "50")}
+     """.stripMargin
 }
