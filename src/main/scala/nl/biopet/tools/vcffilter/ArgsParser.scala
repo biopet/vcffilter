@@ -43,17 +43,16 @@ class ArgsParser(toolCommand: ToolCommand[Args])
     (x, c) =>
       c.copy(invertedOutputVcf = Some(x))
   } text "inverted output vcf file"
-  opt[Int]("minSampleDepth") unbounded () valueName "<int>" action { (x, c) =>
+  opt[Int]("minSampleDepth") valueName "<int>" action { (x, c) =>
     c.copy(minSampleDepth = x)
   } text "Min value for DP in genotype fields"
-  opt[Int]("minTotalDepth") unbounded () valueName "<int>" action { (x, c) =>
+  opt[Int]("minTotalDepth") valueName "<int>" action { (x, c) =>
     c.copy(minTotalDepth = x)
   } text "Min value of DP field in INFO fields"
-  opt[Int]("minAlternateDepth") unbounded () valueName "<int>" action {
-    (x, c) =>
-      c.copy(minAlternateDepth = x)
+  opt[Int]("minAlternateDepth") valueName "<int>" action { (x, c) =>
+    c.copy(minAlternateDepth = x)
   } text "Min value of AD field in genotype fields"
-  opt[Int]("minSamplesPass") unbounded () valueName "<int>" action { (x, c) =>
+  opt[Int]("minSamplesPass") valueName "<int>" action { (x, c) =>
     c.copy(minSamplesPass = x)
   } text "Min number off samples to pass --minAlternateDepth, --minBamAlternateDepth and --minSampleDepth"
   opt[String]("resToDom") unbounded () valueName "<child:father:mother>" action {
@@ -64,7 +63,7 @@ class ArgsParser(toolCommand: ToolCommand[Args])
     (x, c) =>
       c.copy(trioCompound = new Trio(x) :: c.trioCompound)
   } text "Only shows variants where child is a compound variant combined from both parants"
-  opt[String]("deNovoInSample") maxOccurs 1 unbounded () valueName "<sample>" action {
+  opt[String]("deNovoInSample") maxOccurs 1 valueName "<sample>" action {
     (x, c) =>
       c.copy(uniqueVariantInSample = x)
   } text "Only show variants that contain unique alleles in complete set for given sample"
@@ -121,19 +120,19 @@ class ArgsParser(toolCommand: ToolCommand[Args])
     else
       failure("--filterHetVarToHomVar should be in this format: sample:sample")
   } text "If variants in sample 1 are heterogeneous and alternative alleles are homogeneous in sample 2 variants are filtered"
-  opt[Unit]("filterRefCalls") unbounded () action { (_, c) =>
+  opt[Unit]("filterRefCalls") action { (_, c) =>
     c.copy(booleanArgs = c.booleanArgs.copy(filterRefCalls = true))
   } text "Filter when there are only ref calls"
-  opt[Unit]("filterNoCalls") unbounded () action { (_, c) =>
+  opt[Unit]("filterNoCalls") action { (_, c) =>
     c.copy(booleanArgs = c.booleanArgs.copy(filterNoCalls = true))
   } text "Filter when there are only no calls"
-  opt[Unit]("uniqueOnly") unbounded () action { (_, c) =>
+  opt[Unit]("uniqueOnly") action { (_, c) =>
     c.copy(booleanArgs = c.booleanArgs.copy(uniqueOnly = true))
   } text "Filter when there more then 1 sample have this variant"
-  opt[Unit]("sharedOnly") unbounded () action { (_, c) =>
+  opt[Unit]("sharedOnly") action { (_, c) =>
     c.copy(booleanArgs = c.booleanArgs.copy(sharedOnly = true))
   } text "Filter when not all samples have this variant"
-  opt[Double]("minQualScore") unbounded () action { (x, c) =>
+  opt[Double]("minQualScore") action { (x, c) =>
     c.copy(minQualScore = Some(x))
   } text "Min qual score"
   opt[String]("id") unbounded () action { (x, c) =>
@@ -142,7 +141,7 @@ class ArgsParser(toolCommand: ToolCommand[Args])
   opt[File]("idFile") unbounded () action { (x, c) =>
     c.copy(iDset = c.iDset ++ Source.fromFile(x).getLines())
   } text "File that contain list of IDs to get from vcf file"
-  opt[Int]("minGenomeQuality") unbounded () action { (x, c) =>
+  opt[Int]("minGenomeQuality") action { (x, c) =>
     c.copy(minGenomeQuality = x)
   } text "The minimum value in the Genome Quality field."
   opt[String]("advancedGroups") unbounded () action { (x, c) =>
