@@ -378,9 +378,8 @@ object VcfFilter extends ToolCommand[Args] {
   def advancedGroupFilter(record: VariantContext,
                           groups: List[List[String]]): Boolean = {
     val samples = record.getGenotypes
-      .map(
-        a =>
-          a.getSampleName -> (a.isHomRef || a.isNoCall || a.isCompoundNoCall))
+      .map(a =>
+        a.getSampleName -> (a.isHomRef || a.isNoCall || a.isCompoundNoCall))
       .toMap
 
     val g: List[Option[Boolean]] = groups.map { group =>
