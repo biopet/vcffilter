@@ -28,7 +28,7 @@ import htsjdk.variant.variantcontext.writer.{
 import htsjdk.variant.variantcontext.{GenotypeType, VariantContext}
 import htsjdk.variant.vcf.VCFFileReader
 import nl.biopet.tools.vcffilter.Args.Trio
-import nl.biopet.utils.ngs.vcf
+import nl.biopet.utils.ngs.vcf.BiopetGenotype
 import nl.biopet.utils.tool.ToolCommand
 
 import scala.collection.JavaConversions._
@@ -251,7 +251,7 @@ object VcfFilter extends ToolCommand[Args] {
     }
     !samples
       .map(record.getGenotype)
-      .exists(a => a.isHomRef || a.isNoCall || vcf.isCompoundNoCall(a))
+      .exists(a => a.isHomRef || a.isNoCall || a.isCompoundNoCall)
   }
 
   /**
@@ -271,7 +271,7 @@ object VcfFilter extends ToolCommand[Args] {
     }
     samples
       .map(record.getGenotype)
-      .forall(a => a.isHomRef || a.isNoCall || vcf.isCompoundNoCall(a))
+      .forall(a => a.isHomRef || a.isNoCall || a.isCompoundNoCall)
   }
 
   /** Checks if given samples have the same genotype */
@@ -380,8 +380,7 @@ object VcfFilter extends ToolCommand[Args] {
     val samples = record.getGenotypes
       .map(
         a =>
-          a.getSampleName -> (a.isHomRef || a.isNoCall || vcf.isCompoundNoCall(
-            a)))
+          a.getSampleName -> (a.isHomRef || a.isNoCall || a.isCompoundNoCall))
       .toMap
 
     val g: List[Option[Boolean]] = groups.map { group =>
