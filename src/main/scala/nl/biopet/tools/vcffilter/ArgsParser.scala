@@ -132,6 +132,9 @@ class ArgsParser(toolCommand: ToolCommand[Args])
   opt[Unit]("sharedOnly") action { (_, c) =>
     c.copy(booleanArgs = c.booleanArgs.copy(sharedOnly = true))
   } text "Filter when not all samples have this variant"
+  opt[Int]("minCalled") action { (x, c) =>
+    c.copy(minCalled = x)
+  } text "Number of sample where a call must be made"
   opt[Double]("minQualScore") action { (x, c) =>
     c.copy(minQualScore = Some(x))
   } text "Min qual score"

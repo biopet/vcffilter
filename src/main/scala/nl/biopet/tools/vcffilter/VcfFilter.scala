@@ -93,6 +93,7 @@ object VcfFilter extends ToolCommand[Args] {
               filterHetVarToHomVar(record, x._1, x._2))
           ) &&
           uniqueVariantInSample(record, cmdArgs.uniqueVariantInSample) &&
+          minCalled(record, cmdArgs.minCalled) &&
           denovoTrio(record, cmdArgs.deNovoTrio) &&
           denovoTrio(record, cmdArgs.trioLossOfHet, onlyLossHet = true) &&
           resToDom(record, cmdArgs.resToDom) &&
@@ -114,6 +115,12 @@ object VcfFilter extends ToolCommand[Args] {
     writer.close()
     invertedWriter.foreach(_.close())
     logger.info("Done")
+  }
+
+  def minCalled(record: VariantContext, threshold: Int): Boolean = {
+    if (threshold > 0) {
+      record.getGenotypes.count(_.isCalled) >= threshold
+    } else true
   }
 
   /**
