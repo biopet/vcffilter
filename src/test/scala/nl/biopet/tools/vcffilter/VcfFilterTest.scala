@@ -28,7 +28,20 @@ class VcfFilterTest extends ToolTest[Args] {
   val star = new File(starPath)
   val rand = new Random()
 
-  @Test def testOutputTypeVcf(): Unit = {
+  @Test
+  def testMinCalled(): Unit = {
+    val reader = new VCFFileReader(resourceFile("/test.vcf"), false)
+    val record = reader.iterator().next()
+    reader.close()
+
+    VcfFilter.minCalled(record, 0) shouldBe true
+    VcfFilter.minCalled(record, 1) shouldBe true
+    VcfFilter.minCalled(record, 2) shouldBe true
+    VcfFilter.minCalled(record, 3) shouldBe false
+  }
+
+  @Test
+  def testOutputTypeVcf(): Unit = {
     val tmp = File.createTempFile("VcfFilter", ".vcf")
     tmp.deleteOnExit()
     val tmpPath = tmp.getAbsolutePath
@@ -36,7 +49,8 @@ class VcfFilterTest extends ToolTest[Args] {
     main(arguments)
   }
 
-  @Test def testOutputTypeBcf(): Unit = {
+  @Test
+  def testOutputTypeBcf(): Unit = {
     val tmp = File.createTempFile("VcfFilter", ".bcf")
     tmp.deleteOnExit()
     val tmpPath = tmp.getAbsolutePath
@@ -44,7 +58,8 @@ class VcfFilterTest extends ToolTest[Args] {
     main(arguments)
   }
 
-  @Test def testOutputTypeVcfGz(): Unit = {
+  @Test
+  def testOutputTypeVcfGz(): Unit = {
     val tmp = File.createTempFile("VcfFilter", ".vcf.gz")
     tmp.deleteOnExit()
     val tmpPath = tmp.getAbsolutePath
@@ -52,7 +67,8 @@ class VcfFilterTest extends ToolTest[Args] {
     main(arguments)
   }
 
-  @Test def testMustHaveGenotypes(): Unit = {
+  @Test
+  def testMustHaveGenotypes(): Unit = {
 
     /**
       * This should simply not raise an exception
@@ -81,7 +97,8 @@ class VcfFilterTest extends ToolTest[Args] {
 
   }
 
-  @Test def testHasGenotype(): Unit = {
+  @Test
+  def testHasGenotype(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -105,7 +122,8 @@ class VcfFilterTest extends ToolTest[Args] {
       List(("Sample_103", GenotypeType.HET), ("Sample_101", GenotypeType.HOM_REF))) shouldBe false
   }
 
-  @Test def testMinQualScore(): Unit = {
+  @Test
+  def testMinQualScore(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -114,21 +132,24 @@ class VcfFilterTest extends ToolTest[Args] {
 
   }
 
-  @Test def testHasNonRefCalls(): Unit = {
+  @Test
+  def testHasNonRefCalls(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
     hasNonRefCalls(record) shouldBe true
   }
 
-  @Test def testHasCalls(): Unit = {
+  @Test
+  def testHasCalls(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
     hasCalls(record) shouldBe true
   }
 
-  @Test def testHasMinDP(): Unit = {
+  @Test
+  def testHasMinDP(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -136,7 +157,8 @@ class VcfFilterTest extends ToolTest[Args] {
     hasMinTotalDepth(record, 200) shouldBe false
   }
 
-  @Test def testHasMinSampleDP(): Unit = {
+  @Test
+  def testHasMinSampleDP(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -151,7 +173,8 @@ class VcfFilterTest extends ToolTest[Args] {
     hasMinSampleDepth(record, 50, 3) shouldBe false
   }
 
-  @Test def testHasMinSampleAD(): Unit = {
+  @Test
+  def testHasMinSampleAD(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -162,7 +185,8 @@ class VcfFilterTest extends ToolTest[Args] {
     minAlternateDepth(record, 20, 2) shouldBe false
   }
 
-  @Test def testHasMinGQ(): Unit = {
+  @Test
+  def testHasMinGQ(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -171,7 +195,8 @@ class VcfFilterTest extends ToolTest[Args] {
     minGenomeQuality(record, 99, 3) shouldBe true
   }
 
-  @Test def testMustHaveVariant(): Unit = {
+  @Test
+  def testMustHaveVariant(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -185,7 +210,8 @@ class VcfFilterTest extends ToolTest[Args] {
     starReader.iterator().foreach(x => mustHaveVariant(x, List("Sample_101")) shouldBe false)
   }
 
-  @Test def testMustNotHaveVariant(): Unit = {
+  @Test
+  def testMustNotHaveVariant(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -200,7 +226,8 @@ class VcfFilterTest extends ToolTest[Args] {
     starReader.iterator().foreach(x => mustHaveVariant(x, List("Sample_101")) shouldBe false)
   }
 
-  @Test def testSameGenotype(): Unit = {
+  @Test
+  def testSameGenotype(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -209,7 +236,8 @@ class VcfFilterTest extends ToolTest[Args] {
     notSameGenotype(record, "Sample_102", "Sample_103") shouldBe true
   }
 
-  @Test def testfilterHetVarToHomVar(): Unit = {
+  @Test
+  def testfilterHetVarToHomVar(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -218,7 +246,8 @@ class VcfFilterTest extends ToolTest[Args] {
     filterHetVarToHomVar(record, "Sample_102", "Sample_103") shouldBe true
   }
 
-  @Test def testDeNovo(): Unit = {
+  @Test
+  def testDeNovo(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -227,7 +256,8 @@ class VcfFilterTest extends ToolTest[Args] {
     uniqueVariantInSample(record, "Sample_103") shouldBe false
   }
 
-  @Test def testResToDom(): Unit = {
+  @Test
+  def testResToDom(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
     val trio = Trio("Sample_101", "Sample_102", "Sample_103")
@@ -235,7 +265,8 @@ class VcfFilterTest extends ToolTest[Args] {
     resToDom(record, List(trio)) shouldBe false
   }
 
-  @Test def testTrioCompound: Boolean = {
+  @Test
+  def testTrioCompound: Boolean = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
     val trio = Trio("Sample_101", "Sample_102", "Sample_103")
@@ -243,7 +274,8 @@ class VcfFilterTest extends ToolTest[Args] {
     trioCompound(record, List(trio))
   }
 
-  @Test def testDeNovoTrio: Boolean = {
+  @Test
+  def testDeNovoTrio: Boolean = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
     val trio = Trio("Sample_101", "Sample_102", "Sample_103")
@@ -251,7 +283,8 @@ class VcfFilterTest extends ToolTest[Args] {
     denovoTrio(record, List(trio))
   }
 
-  @Test def testInIDSet(): Unit = {
+  @Test
+  def testInIDSet(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
@@ -259,7 +292,8 @@ class VcfFilterTest extends ToolTest[Args] {
     inIdSet(record, Set("dummy")) shouldBe false
   }
 
-  @Test def testAdvancedGroup(): Unit = {
+  @Test
+  def testAdvancedGroup(): Unit = {
     val reader = new VCFFileReader(vepped, false)
     val record = reader.iterator().next()
 
