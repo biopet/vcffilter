@@ -108,8 +108,7 @@ object VcfFilter extends ToolCommand[Args] {
         logger.info(
           s"$counterTotal variants processed, $counterLeft passed filter")
     }
-    logger.info(
-      s"$counterTotal variants processed, $counterLeft passed filter")
+    logger.info(s"$counterTotal variants processed, $counterLeft passed filter")
     reader.close()
     writer.close()
     invertedWriter.foreach(_.close())
@@ -242,7 +241,8 @@ object VcfFilter extends ToolCommand[Args] {
     * @param samples List of samples that should have this variant
     * @return true if filter passed
     */
-  def mustHaveVariant(record: VariantContext, samples: List[String]): Boolean = {
+  def mustHaveVariant(record: VariantContext,
+                      samples: List[String]): Boolean = {
     samples.foreach { s =>
       if (!record.getSampleNames.toList.contains(s)) {
         throw new IllegalArgumentException(
@@ -410,11 +410,6 @@ object VcfFilter extends ToolCommand[Args] {
   def exampleText: String =
     s"""
        |To filter a VCF for variants with a minimum quality score of 50:
-       |${example("-I",
-                  "input.vcf",
-                  "-o",
-                  "output.vcf",
-                  "--minQualScore",
-                  "50")}
+       |${example("-I", "input.vcf", "-o", "output.vcf", "--minQualScore", "50")}
      """.stripMargin
 }
