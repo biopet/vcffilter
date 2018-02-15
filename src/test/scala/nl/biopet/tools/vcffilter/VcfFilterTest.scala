@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2014 Biopet
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package nl.biopet.tools.vcffilter
 
 import java.io.File
@@ -60,7 +81,12 @@ class VcfFilterTest extends ToolTest[Args] {
     val tmp = File.createTempFile("VCfFilter", ".vcf")
     tmp.deleteOnExit()
     val arguments: Array[String] =
-      Array("-I", veppedPath, "-o", tmp.getAbsolutePath, "--mustHaveGenotype", "Sample_101:HET")
+      Array("-I",
+            veppedPath,
+            "-o",
+            tmp.getAbsolutePath,
+            "--mustHaveGenotype",
+            "Sample_101:HET")
     main(arguments)
 
     val size = new VCFFileReader(tmp, false).size
@@ -69,11 +95,11 @@ class VcfFilterTest extends ToolTest[Args] {
     val tmp2 = File.createTempFile("VcfFilter", ".vcf.gz")
     tmp2.deleteOnExit()
     val arguments2: Array[String] = Array("-I",
-      veppedPath,
-      "-o",
-      tmp2.getAbsolutePath,
-      "--mustHaveGenotype",
-      "Sample_101:HOM_VAR")
+                                          veppedPath,
+                                          "-o",
+                                          tmp2.getAbsolutePath,
+                                          "--mustHaveGenotype",
+                                          "Sample_101:HOM_VAR")
     main(arguments2)
 
     val size2 = new VCFFileReader(tmp2, false).size
@@ -97,12 +123,12 @@ class VcfFilterTest extends ToolTest[Args] {
     hasGenotype(record, List(("Sample_103", GenotypeType.NO_CALL))) shouldBe false
     hasGenotype(record, List(("Sample_103", GenotypeType.MIXED))) shouldBe false
 
-    hasGenotype(
-      record,
-      List(("Sample_103", GenotypeType.HOM_REF), ("Sample_101", GenotypeType.HET))) shouldBe true
-    hasGenotype(
-      record,
-      List(("Sample_103", GenotypeType.HET), ("Sample_101", GenotypeType.HOM_REF))) shouldBe false
+    hasGenotype(record,
+                List(("Sample_103", GenotypeType.HOM_REF),
+                     ("Sample_101", GenotypeType.HET))) shouldBe true
+    hasGenotype(record,
+                List(("Sample_103", GenotypeType.HET),
+                     ("Sample_101", GenotypeType.HOM_REF))) shouldBe false
   }
 
   @Test def testMinQualScore(): Unit = {
@@ -179,10 +205,13 @@ class VcfFilterTest extends ToolTest[Args] {
     mustHaveVariant(record, List("Sample_101", "Sample_102")) shouldBe true
     mustHaveVariant(record, List("Sample_101", "Sample_102", "Sample_103")) shouldBe false
 
-    an[IllegalArgumentException] shouldBe thrownBy(mustHaveVariant(record, List("notExistant")))
+    an[IllegalArgumentException] shouldBe thrownBy(
+      mustHaveVariant(record, List("notExistant")))
 
     val starReader = new VCFFileReader(star, false)
-    starReader.iterator().foreach(x => mustHaveVariant(x, List("Sample_101")) shouldBe false)
+    starReader
+      .iterator()
+      .foreach(x => mustHaveVariant(x, List("Sample_101")) shouldBe false)
   }
 
   @Test def testMustNotHaveVariant(): Unit = {
@@ -194,10 +223,13 @@ class VcfFilterTest extends ToolTest[Args] {
     mustNotHaveVariant(record, List("Sample_101", "Sample_102", "Sample_103")) shouldBe false
     mustNotHaveVariant(record, List("Sample_103")) shouldBe true
 
-    an[IllegalArgumentException] shouldBe thrownBy(mustHaveVariant(record, List("notExistant")))
+    an[IllegalArgumentException] shouldBe thrownBy(
+      mustHaveVariant(record, List("notExistant")))
 
     val starReader = new VCFFileReader(star, false)
-    starReader.iterator().foreach(x => mustHaveVariant(x, List("Sample_101")) shouldBe false)
+    starReader
+      .iterator()
+      .foreach(x => mustHaveVariant(x, List("Sample_101")) shouldBe false)
   }
 
   @Test def testSameGenotype(): Unit = {
@@ -266,10 +298,12 @@ class VcfFilterTest extends ToolTest[Args] {
     advancedGroupFilter(record, Nil) shouldBe true
     advancedGroupFilter(record, List(List("Sample_101", "Sample_102"))) shouldBe true
     advancedGroupFilter(record, List(List("Sample_102", "Sample_103"))) shouldBe false
+    advancedGroupFilter(record,
+                        List(List("Sample_102", "Sample_103"),
+                             List("Sample_101", "Sample_102"))) shouldBe false
     advancedGroupFilter(
       record,
-      List(List("Sample_102", "Sample_103"), List("Sample_101", "Sample_102"))) shouldBe false
-    advancedGroupFilter(record, List(List("Sample_102"), List("Sample_101", "Sample_102"))) shouldBe true
+      List(List("Sample_102"), List("Sample_101", "Sample_102"))) shouldBe true
   }
 
 }
