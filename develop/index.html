@@ -1,3 +1,24 @@
+<!--
+   Copyright (c) 2014 Biopet
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy of
+   this software and associated documentation files (the "Software"), to deal in
+   the Software without restriction, including without limitation the rights to
+   use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+   the Software, and to permit persons to whom the Software is furnished to do so,
+   subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+   FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+   COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+   IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -108,198 +129,198 @@
         
         <h2 id="usage" class="section">Usage</h2>
         <p>Usage for VcfFilter:</p>
-        <p>&lt;table class=&quot;table&quot;&gt;
-          &lt;thead&gt;
-            &lt;tr&gt;
-              &lt;th&gt;Option&lt;/th&gt;
-              &lt;th&gt;Required&lt;/th&gt;
-              &lt;th&gt;Can occur multiple times&lt;/th&gt;
-              &lt;th&gt;Description&lt;/th&gt;
-            &lt;/tr&gt;
-          &lt;/thead&gt;
-          &lt;tbody&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--log<em>level, -l&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Level of log information printed. Possible levels: &#39;debug&#39;, &#39;info&#39;, &#39;warn&#39;, &#39;error&#39;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--help, -h&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Print usage&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--version, -v&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Print version&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--inputVcf, -I&lt;/td&gt;
-              &lt;td&gt;yes&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Input vcf file&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--outputVcf, -o&lt;/td&gt;
-              &lt;td&gt;yes&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Output vcf file&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--invertedOutputVcf&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;inverted output vcf file&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--minSampleDepth&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Min value for DP in genotype fields&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--minTotalDepth&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Min value of DP field in INFO fields&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--minAlternateDepth&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Min value of AD field in genotype fields&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--minSamplesPass&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Min number off samples to pass --minAlternateDepth, --minBamAlternateDepth and --minSampleDepth&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--resToDom&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Only shows variants where child is homozygous and both parants hetrozygous&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--trioCompound&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Only shows variants where child is a compound variant combined from both parants&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--deNovoInSample&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Only show variants that contain unique alleles in complete set for given sample&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--deNovoTrio&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Only show variants that are denovo in the trio&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--trioLossOfHet&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Only show variants where a loss of hetrozygosity is detected&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--mustHaveVariant&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Given sample must have 1 alternative allele&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--mustNotHaveVariant&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Given sample may not have alternative alleles&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--calledIn&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Must be called in this sample&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--mustHaveGenotype&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Must have genotoype &lt;genotype&gt; for this sample. Genotype can be NO</em>CALL, HOM<em>REF, HET, HOM</em>VAR, UNAVAILABLE, MIXED&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--diffGenotype&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Given samples must have a different genotype&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--filterHetVarToHomVar&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;If variants in sample 1 are heterogeneous and alternative alleles are homogeneous in sample 2 variants are filtered&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--filterRefCalls&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Filter when there are only ref calls&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--filterNoCalls&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Filter when there are only no calls&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--uniqueOnly&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Filter when there more then 1 sample have this variant&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--sharedOnly&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Filter when not all samples have this variant&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--minQualScore&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;Min qual score&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--id&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;Id that may pass the filter&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--idFile&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;File that contain list of IDs to get from vcf file&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--minGenomeQuality&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;The minimum value in the Genome Quality field.&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;--advancedGroups&lt;/td&gt;
-              &lt;td&gt;no&lt;/td&gt;
-              &lt;td&gt;yes (unlimited)&lt;/td&gt;
-              &lt;td&gt;All members of groups sprated with a &#39;,&#39;&lt;/td&gt;
-            &lt;/tr&gt;
-          &lt;/tbody&gt;
-        &lt;/table&gt;</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Required</th>
+              <th>Can occur multiple times</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>--log_level, -l</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Level of log information printed. Possible levels: &#39;debug&#39;, &#39;info&#39;, &#39;warn&#39;, &#39;error&#39;</td>
+            </tr>
+            <tr>
+              <td>--help, -h</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Print usage</td>
+            </tr>
+            <tr>
+              <td>--version, -v</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Print version</td>
+            </tr>
+            <tr>
+              <td>--inputVcf, -I</td>
+              <td>yes</td>
+              <td>no</td>
+              <td>Input vcf file</td>
+            </tr>
+            <tr>
+              <td>--outputVcf, -o</td>
+              <td>yes</td>
+              <td>no</td>
+              <td>Output vcf file</td>
+            </tr>
+            <tr>
+              <td>--invertedOutputVcf</td>
+              <td>no</td>
+              <td>no</td>
+              <td>inverted output vcf file</td>
+            </tr>
+            <tr>
+              <td>--minSampleDepth</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min value for DP in genotype fields</td>
+            </tr>
+            <tr>
+              <td>--minTotalDepth</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min value of DP field in INFO fields</td>
+            </tr>
+            <tr>
+              <td>--minAlternateDepth</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min value of AD field in genotype fields</td>
+            </tr>
+            <tr>
+              <td>--minSamplesPass</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min number off samples to pass --minAlternateDepth, --minBamAlternateDepth and --minSampleDepth</td>
+            </tr>
+            <tr>
+              <td>--resToDom</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Only shows variants where child is homozygous and both parants hetrozygous</td>
+            </tr>
+            <tr>
+              <td>--trioCompound</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Only shows variants where child is a compound variant combined from both parants</td>
+            </tr>
+            <tr>
+              <td>--deNovoInSample</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Only show variants that contain unique alleles in complete set for given sample</td>
+            </tr>
+            <tr>
+              <td>--deNovoTrio</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Only show variants that are denovo in the trio</td>
+            </tr>
+            <tr>
+              <td>--trioLossOfHet</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Only show variants where a loss of hetrozygosity is detected</td>
+            </tr>
+            <tr>
+              <td>--mustHaveVariant</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Given sample must have 1 alternative allele</td>
+            </tr>
+            <tr>
+              <td>--mustNotHaveVariant</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Given sample may not have alternative alleles</td>
+            </tr>
+            <tr>
+              <td>--calledIn</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Must be called in this sample</td>
+            </tr>
+            <tr>
+              <td>--mustHaveGenotype</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Must have genotoype <genotype> for this sample. Genotype can be NO_CALL, HOM_REF, HET, HOM_VAR, UNAVAILABLE, MIXED</td>
+            </tr>
+            <tr>
+              <td>--diffGenotype</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Given samples must have a different genotype</td>
+            </tr>
+            <tr>
+              <td>--filterHetVarToHomVar</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>If variants in sample 1 are heterogeneous and alternative alleles are homogeneous in sample 2 variants are filtered</td>
+            </tr>
+            <tr>
+              <td>--filterRefCalls</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Filter when there are only ref calls</td>
+            </tr>
+            <tr>
+              <td>--filterNoCalls</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Filter when there are only no calls</td>
+            </tr>
+            <tr>
+              <td>--uniqueOnly</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Filter when there more then 1 sample have this variant</td>
+            </tr>
+            <tr>
+              <td>--sharedOnly</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Filter when not all samples have this variant</td>
+            </tr>
+            <tr>
+              <td>--minQualScore</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min qual score</td>
+            </tr>
+            <tr>
+              <td>--id</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Id that may pass the filter</td>
+            </tr>
+            <tr>
+              <td>--idFile</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>File that contain list of IDs to get from vcf file</td>
+            </tr>
+            <tr>
+              <td>--minGenomeQuality</td>
+              <td>no</td>
+              <td>no</td>
+              <td>The minimum value in the Genome Quality field.</td>
+            </tr>
+            <tr>
+              <td>--advancedGroups</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>All members of groups sprated with a &#39;,&#39;</td>
+            </tr>
+          </tbody>
+        </table>
         
         <h1 id="about" class="section">About</h1>
         <p>VcfFilter is part of BIOPET tool suite that is developed at LUMC by <a href="http://sasc.lumc.nl/">the SASC team</a>.
@@ -317,14 +338,14 @@
         good results with <a href="https://www.jetbrains.com/idea/">this IDE</a>.</p>
         
         <h1 id="contact" class="section">Contact</h1>
-        <p>&lt;p&gt;
-          &lt;!-- Obscure e-mail address for spammers --&gt;
+        <p>
+          <!-- Obscure e-mail address for spammers -->
         For any question related to VcfFilter, please use the
-        &lt;a href=&#39;https://github.com/biopet/vcffilter/issues&#39;&gt;github issue tracker&lt;/a&gt;
+        <a href='https://github.com/biopet/vcffilter/issues'>github issue tracker</a>
         or contact
-         &lt;a href=&#39;http://sasc.lumc.nl/&#39;&gt;the SASC team&lt;/a&gt; directly at: &lt;a href=&#39;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#116;&amp;#111;&amp;#58;&amp;#115;&amp;#97;&amp;#115;&amp;#99;&amp;#64;&amp;#108;&amp;#117;&amp;#109;&amp;#99;&amp;#46;&amp;#110;&amp;#108;&#39;&gt;
-        &amp;#115;&amp;#97;&amp;#115;&amp;#99;&amp;#64;&amp;#108;&amp;#117;&amp;#109;&amp;#99;&amp;#46;&amp;#110;&amp;#108;&lt;/a&gt;.
-        &lt;/p&gt;</p>      
+         <a href='http://sasc.lumc.nl/'>the SASC team</a> directly at: <a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;'>
+        &#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;</a>.
+        </p>      
 
       </div>
     </div>
