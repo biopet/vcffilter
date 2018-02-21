@@ -47,7 +47,8 @@ case class Args(inputVcf: File = null,
                 filterHetVarToHomVar: List[(String, String)] = Nil,
                 iDset: Set[String] = Set(),
                 minGenomeQuality: Int = 0,
-                advancedGroups: List[List[String]] = Nil)
+                advancedGroups: List[List[String]] = Nil,
+                minCalled: Int = 0)
 
 object Args {
   case class BooleanArgs(uniqueOnly: Boolean = false,
