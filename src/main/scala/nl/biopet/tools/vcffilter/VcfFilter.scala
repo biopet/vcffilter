@@ -237,7 +237,8 @@ object VcfFilter extends ToolCommand[Args] {
           .filter(_.hasGQ)
           .map(_.getGQ)
           .toList
-        (gqs.sum / gqs.size) >= gq
+        if (gqs.nonEmpty) (gqs.sum / gqs.size) >= gq
+        else true
       case _ => true
 
     }
