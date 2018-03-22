@@ -150,4 +150,7 @@ class ArgsParser(toolCommand: ToolCommand[Args])
   opt[String]("advancedGroups") unbounded () action { (x, c) =>
     c.copy(advancedGroups = x.split(",").toList :: c.advancedGroups)
   } text "All members of groups sprated with a ','"
+  opt[Int]("minAvgVariantGQ") unbounded () action { (x, c) =>
+    c.copy(minAvgVariantGQ = Some(x))
+  } text "Filter on the average GQ of variants"
 }

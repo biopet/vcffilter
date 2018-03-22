@@ -67,6 +67,7 @@ object VcfFilter extends ToolCommand[Args] {
           (!cmdArgs.booleanArgs.filterNoCalls || hasCalls(record)) &&
           (!cmdArgs.booleanArgs.uniqueOnly || hasUniqeSample(record)) &&
           (!cmdArgs.booleanArgs.sharedOnly || allSamplesVariant(record)) &&
+          minAvgVariantGq(record, cmdArgs.minAvgVariantGQ) &&
           hasMinTotalDepth(record, cmdArgs.minTotalDepth) &&
           hasMinSampleDepth(record,
                             cmdArgs.minSampleDepth,
@@ -220,6 +221,26 @@ object VcfFilter extends ToolCommand[Args] {
         AD.tail.count(_ >= minAlternateDepth) > 0
       else true
     }) >= minSamplesPass
+  }
+
+  /**
+    * This filters on the average GQ on all variants
+    * @param record VCF record
+    * @param minGQ Minimal average GQ on variants
+    * @return
+    */
+  def minAvgVariantGq(record: VariantContext, minGQ: Option[Int]): Boolean = {
+    minGQ match {
+      case Some(gq) =>
+        val gqs = record.getGenotypes
+          .filter(a => a.isHomRef || a.isNoCall || a.isCompoundNoCall)
+          .filter(_.hasGQ)
+          .map(_.getGQ)
+          .toList
+        (gqs.sum / gqs.size) >= gq
+      case _ => true
+
+    }
   }
 
   /**
