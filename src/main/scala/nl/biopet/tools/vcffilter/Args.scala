@@ -27,6 +27,7 @@ import htsjdk.variant.variantcontext.GenotypeType
 
 case class Args(inputVcf: File = null,
                 outputVcf: File = null,
+                minAvgVariantGQ: Option[Int] = None,
                 invertedOutputVcf: Option[File] = None,
                 minQualScore: Option[Double] = None,
                 minSampleDepth: Int = -1,
