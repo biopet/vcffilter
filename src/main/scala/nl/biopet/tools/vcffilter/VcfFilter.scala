@@ -413,11 +413,11 @@ object VcfFilter extends ToolCommand[Args] {
         .toMap
 
       val g: List[Option[Boolean]] = groups.map { group =>
-        val total = group.size
-        val count = group.count(samples(_))
-        if (count == 0) Some(false)
-        else if (total == count) Some(true)
-        else None
+        group.count(samples(_)) match {
+          case c if c == group.size => Some(true)
+          case c if c == 0          => Some(false)
+          case _                    => None
+        }
       }
 
       !g.contains(None) && g.contains(Some(true))
