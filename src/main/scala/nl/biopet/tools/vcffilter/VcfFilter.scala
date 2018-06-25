@@ -406,20 +406,22 @@ object VcfFilter extends ToolCommand[Args] {
     */
   def advancedGroupFilter(record: VariantContext,
                           groups: List[List[String]]): Boolean = {
-    val samples = record.getGenotypes
-      .map(a =>
-        a.getSampleName -> (a.isHomRef || a.isNoCall || a.isCompoundNoCall))
-      .toMap
+    if (groups.nonEmpty) {
+      val samples = record.getGenotypes
+        .map(a =>
+          a.getSampleName -> !(a.isHomRef || a.isNoCall || a.isCompoundNoCall))
+        .toMap
 
-    val g: List[Option[Boolean]] = groups.map { group =>
-      val total = group.size
-      val count = group.count(samples(_))
-      if (count == 0) Some(false)
-      else if (total == count) Some(true)
-      else None
-    }
+      val g: List[Option[Boolean]] = groups.map { group =>
+        group.count(samples(_)) match {
+          case c if c == group.size => Some(true)
+          case c if c == 0          => Some(false)
+          case _                    => None
+        }
+      }
 
-    !g.contains(None)
+      !g.contains(None) && g.contains(Some(true))
+    } else true
   }
 
   def descriptionText: String =
