@@ -25,6 +25,8 @@ import java.io.File
 
 import htsjdk.variant.variantcontext.GenotypeType
 
+import scala.util.matching.Regex
+
 case class Args(inputVcf: File = null,
                 outputVcf: File = null,
                 minAvgVariantGQ: Option[Int] = None,
@@ -49,7 +51,8 @@ case class Args(inputVcf: File = null,
                 iDset: Set[String] = Set(),
                 minGenomeQuality: Int = 0,
                 advancedGroups: List[List[String]] = Nil,
-                minCalled: Int = 0)
+                minCalled: Int = 0,
+                infoArrayMustContain: Map[String, Regex] = Map())
 
 object Args {
   case class BooleanArgs(uniqueOnly: Boolean = false,

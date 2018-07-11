@@ -32,6 +32,7 @@ import nl.biopet.utils.ngs.vcf.BiopetGenotype
 import nl.biopet.utils.tool.ToolCommand
 
 import scala.collection.JavaConversions._
+import scala.util.matching.Regex
 
 object VcfFilter extends ToolCommand[Args] {
   def emptyArgs: Args = Args()
@@ -100,7 +101,10 @@ object VcfFilter extends ToolCommand[Args] {
           resToDom(record, cmdArgs.resToDom) &&
           trioCompound(record, cmdArgs.trioCompound) &&
           advancedGroupFilter(record, cmdArgs.advancedGroups) &&
-          (cmdArgs.iDset.isEmpty || inIdSet(record, cmdArgs.iDset))) {
+          (cmdArgs.iDset.isEmpty || inIdSet(record, cmdArgs.iDset)) &&
+          cmdArgs.infoArrayMustContain.forall {
+            case (k, v) => infoFieldMustMatch(record, k, v)
+          }) {
         writer.add(record)
         counterLeft += 1
       } else
@@ -422,6 +426,15 @@ object VcfFilter extends ToolCommand[Args] {
 
       !g.contains(None) && g.contains(Some(true))
     } else true
+  }
+
+  /** A info field should match the given regex */
+  def infoFieldMustMatch(record: VariantContext,
+                         key: String,
+                         regex: Regex): Boolean = {
+    record
+      .getAttributeAsStringList(key, "")
+      .exists(regex.findFirstIn(_).isDefined)
   }
 
   def descriptionText: String =

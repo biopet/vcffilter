@@ -153,4 +153,11 @@ class ArgsParser(toolCommand: ToolCommand[Args])
   opt[Int]("minAvgVariantGQ") unbounded () action { (x, c) =>
     c.copy(minAvgVariantGQ = Some(x))
   } text "Filter on the average GQ of variants"
+  opt[(String, String)]("infoArrayMustContain")
+    .unbounded()
+    .action {
+      case ((key, regex), c) =>
+        c.copy(infoArrayMustContain = c.infoArrayMustContain + (key -> regex.r))
+    }
+    .text("Info field must be a array and should match the given regex")
 }
