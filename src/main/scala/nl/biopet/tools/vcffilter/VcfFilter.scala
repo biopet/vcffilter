@@ -428,6 +428,7 @@ object VcfFilter extends ToolCommand[Args] {
     } else true
   }
 
+  /** A info field should match the given regex */
   def infoFieldMustMatch(record: VariantContext,
                          key: String,
                          regex: Regex): Boolean = {
