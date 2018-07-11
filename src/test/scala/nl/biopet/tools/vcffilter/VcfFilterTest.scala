@@ -340,4 +340,16 @@ class VcfFilterTest extends ToolTest[Args] {
       List(List("Sample_102"), List("Sample_101", "Sample_102"))) shouldBe true
   }
 
+  @Test
+  def testInfoFieldMustMatch(): Unit = {
+    val reader = new VCFFileReader(resourceFile("/test.vcf"), false)
+    val record = reader.iterator().next()
+    reader.close()
+
+    VcfFilter.infoFieldMustMatch(record, "CSQ", "bla".r) shouldBe true
+    VcfFilter.infoFieldMustMatch(record, "CSQ", "bla2".r) shouldBe true
+    VcfFilter.infoFieldMustMatch(record, "CSQ", "bla3".r) shouldBe false
+    VcfFilter.infoFieldMustMatch(record, "CSQ", ".*l.*".r) shouldBe true
+    VcfFilter.infoFieldMustMatch(record, "CSQ", ".*q.*".r) shouldBe false
+  }
 }
