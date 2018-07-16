@@ -3,7 +3,7 @@ organizationName := "Biopet"
 
 startYear := Some(2014)
 
-name := "vcffilter"
+name := "VcfFilter"
 biopetUrlName := "vcffilter"
 
 biopetIsTool := true
