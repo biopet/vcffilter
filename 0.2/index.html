@@ -1,0 +1,381 @@
+<!--
+   Copyright (c) 2014 Biopet
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy of
+   this software and associated documentation files (the "Software"), to deal in
+   the Software without restriction, including without limitation the rights to
+   use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+   the Software, and to permit persons to whom the Software is furnished to do so,
+   subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+   FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+   COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+   IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>VcfFilter</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/docs.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">VcfFilter</a>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text" id="Version">
+              Version</li>
+          </ul>
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </nav>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar" >
+
+        <ul class="nav nav-sidebar nav-list">
+          <li><b>Index</b></li>
+          
+          <li><a href="#description"><span>Description</span></a></li>
+          
+          <li><a href="#installation"><span>Installation</span></a></li>
+          
+          <li><a href="#manual"><span>Manual</span></a></li>
+          
+          <li><a href="#about"><span>About</span></a></li>
+          
+          <li><a href="#contributing"><span>Contributing</span></a></li>
+          
+          <li><a href="#contact"><span>Contact</span></a></li>
+          
+        </ul>
+        <ul class="nav nav-sidebar nav-list">
+          <li><b>Project Links</b></li>
+
+          <li><a href="https://github.com/biopet/vcffilter">Source code</a></li>
+          <li><a href="https://github.com/biopet/vcffilter/issues">Feedback, feature requests and bug reports</a></li>
+          <li><a href="api/index.html">API Documentation</a></li>
+        </ul>
+        <ul class="nav nav-sidebar nav-list">
+          <li><b>Documentation</b></li>
+          <li><a href="../index.html">Latest stable version</a></li>
+          <li><a href="../develop/index.html">Development version</a></li>
+        </ul>
+      </div>
+      
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="top">
+
+        
+        <h1 id="description" class="section">Description</h1>
+        <p>This tool enables a user to filter VCF files. For example on sample depth and/or total depth. It can also be used to
+        filter out the reference calls and/or minimum number of sample passes. There is a wide set of options which one can
+        use to change the filter settings.</p>
+        
+        <h1 id="installation" class="section">Installation</h1>
+        <p>VcfFilter requires Java 8 to be installed on your device. Download Java 8
+        <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">here</a>
+        or install via your distribution&#39;s package manager.</p>
+        <p>Download the latest version of VcfFilter <a href="https://github.com/biopet/vcffilter/releases/">here</a>.
+        To generate the usage run:</p>
+        <pre><code>java -jar &lt;VcfFilter_jar&gt; --help</code></pre>
+        
+        <h1 id="manual" class="section">Manual</h1>
+        <p>This tool filters VCF files on a number of values. For example, it can filter on sample depth and/or total depth. It
+        can also filter out the reference calls and/or minimum number of sample passes. For more on filtering options and how
+        to set them, please refer to the help usage.</p>
+        
+        <h2 id="example" class="section">Example</h2>
+        <p>To filter a VCF for variants with a minimum quality score of 50:</p>
+        <pre><code>java -jar &lt;VcfFilter_jar&gt; \
+-I input.vcf \
+-o output.vcf \
+--minQualScore 50</code></pre>
+        
+        <h2 id="usage" class="section">Usage</h2>
+        <p>Usage for VcfFilter:</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Required</th>
+              <th>Can occur multiple times</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>--log_level, -l</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Level of log information printed. Possible levels: &#39;debug&#39;, &#39;info&#39;, &#39;warn&#39;, &#39;error&#39;</td>
+            </tr>
+            <tr>
+              <td>--help, -h</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Print usage</td>
+            </tr>
+            <tr>
+              <td>--version, -v</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Print version</td>
+            </tr>
+            <tr>
+              <td>--inputVcf, -I</td>
+              <td>yes</td>
+              <td>no</td>
+              <td>Input vcf file</td>
+            </tr>
+            <tr>
+              <td>--outputVcf, -o</td>
+              <td>yes</td>
+              <td>no</td>
+              <td>Output vcf file</td>
+            </tr>
+            <tr>
+              <td>--invertedOutputVcf</td>
+              <td>no</td>
+              <td>no</td>
+              <td>inverted output vcf file</td>
+            </tr>
+            <tr>
+              <td>--minSampleDepth</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min value for DP in genotype fields</td>
+            </tr>
+            <tr>
+              <td>--minTotalDepth</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min value of DP field in INFO fields</td>
+            </tr>
+            <tr>
+              <td>--minAlternateDepth</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min value of AD field in genotype fields</td>
+            </tr>
+            <tr>
+              <td>--minSamplesPass</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min number off samples to pass --minAlternateDepth, --minBamAlternateDepth and --minSampleDepth</td>
+            </tr>
+            <tr>
+              <td>--resToDom</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Only shows variants where child is homozygous and both parants hetrozygous</td>
+            </tr>
+            <tr>
+              <td>--trioCompound</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Only shows variants where child is a compound variant combined from both parants</td>
+            </tr>
+            <tr>
+              <td>--deNovoInSample</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Only show variants that contain unique alleles in complete set for given sample</td>
+            </tr>
+            <tr>
+              <td>--deNovoTrio</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Only show variants that are denovo in the trio</td>
+            </tr>
+            <tr>
+              <td>--trioLossOfHet</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Only show variants where a loss of hetrozygosity is detected</td>
+            </tr>
+            <tr>
+              <td>--mustHaveVariant</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Given sample must have 1 alternative allele</td>
+            </tr>
+            <tr>
+              <td>--mustNotHaveVariant</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Given sample may not have alternative alleles</td>
+            </tr>
+            <tr>
+              <td>--calledIn</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Must be called in this sample</td>
+            </tr>
+            <tr>
+              <td>--mustHaveGenotype</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Must have genotoype <genotype> for this sample. Genotype can be NO_CALL, HOM_REF, HET, HOM_VAR, UNAVAILABLE, MIXED</td>
+            </tr>
+            <tr>
+              <td>--diffGenotype</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Given samples must have a different genotype</td>
+            </tr>
+            <tr>
+              <td>--filterHetVarToHomVar</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>If variants in sample 1 are heterogeneous and alternative alleles are homogeneous in sample 2 variants are filtered</td>
+            </tr>
+            <tr>
+              <td>--filterRefCalls</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Filter when there are only ref calls</td>
+            </tr>
+            <tr>
+              <td>--filterNoCalls</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Filter when there are only no calls</td>
+            </tr>
+            <tr>
+              <td>--uniqueOnly</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Filter when there more then 1 sample have this variant</td>
+            </tr>
+            <tr>
+              <td>--sharedOnly</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Filter when not all samples have this variant</td>
+            </tr>
+            <tr>
+              <td>--minCalled</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Number of sample where a call must be made</td>
+            </tr>
+            <tr>
+              <td>--minQualScore</td>
+              <td>no</td>
+              <td>no</td>
+              <td>Min qual score</td>
+            </tr>
+            <tr>
+              <td>--id</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Id that may pass the filter</td>
+            </tr>
+            <tr>
+              <td>--idFile</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>File that contain list of IDs to get from vcf file</td>
+            </tr>
+            <tr>
+              <td>--minGenomeQuality</td>
+              <td>no</td>
+              <td>no</td>
+              <td>The minimum value in the Genome Quality field.</td>
+            </tr>
+            <tr>
+              <td>--advancedGroups</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>All members of groups sprated with a &#39;,&#39;</td>
+            </tr>
+            <tr>
+              <td>--minAvgVariantGQ</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Filter on the average GQ of variants</td>
+            </tr>
+            <tr>
+              <td>--infoArrayMustContain</td>
+              <td>no</td>
+              <td>yes (unlimited)</td>
+              <td>Info field must be a array and should match the given regex</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h1 id="about" class="section">About</h1>
+        <p>VcfFilter is part of BIOPET tool suite that is developed at LUMC by <a href="http://sasc.lumc.nl/">the SASC team</a>.
+        Each tool in the BIOPET tool suite is meant to offer a standalone function that can be used to perform a
+        dedicate data analysis task or added as part of <a href="http://biopet-docs.readthedocs.io/en/latest/">BIOPET pipelines</a>.</p>
+        <p>All tools in the BIOPET tool suite are <a href="https://www.gnu.org/philosophy/free-sw.html">Free/Libre</a> and
+        <a href="https://opensource.org/osd">Open Source</a> Software.</p>
+        
+        <h1 id="contributing" class="section">Contributing</h1>
+        <p>The source code of VcfFilter can be found <a href="https://github.com/biopet/vcffilter">here</a>.
+        We welcome any contributions. Bug reports, feature requests and feedback can be submitted at our
+        <a href="https://github.com/biopet/vcffilter/issues">issue tracker</a>.</p>
+        <p>VcfFilter is build using sbt. Before submitting a pull request, make sure all tests can be passed by
+        running <code>sbt test</code> from the project&#39;s root. We recommend using an IDE to work on VcfFilter. We have had
+        good results with <a href="https://www.jetbrains.com/idea/">this IDE</a>.</p>
+        
+        <h1 id="contact" class="section">Contact</h1>
+        <p>
+          <!-- Obscure e-mail address for spammers -->
+        For any question related to VcfFilter, please use the
+        <a href='https://github.com/biopet/vcffilter/issues'>github issue tracker</a>
+        or contact
+         <a href='http://sasc.lumc.nl/'>the SASC team</a> directly at: <a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;'>
+        &#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;</a>.
+        </p>      
+
+      </div>
+    </div>
+
+  </div>
+  <script>
+    var loc = window.location.pathname;
+    var thisDir = loc.substring(0, loc.lastIndexOf('/'));
+    var splitLocation = window.location.pathname.split('/');
+    var version = splitLocation[splitLocation.length - 2]
+    document.getElementById("Version").innerHTML = "Version " + version;
+  </script>
+</body>
+
+</html>
